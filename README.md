@@ -66,10 +66,19 @@ new RippleEffect(element);
 
 <script>
     // just add effect to elements
-    document.querySelectorAll('[data-ripple]').forEach(function(element){
+    Array.prototype.forEach.call(document.querySelectorAll('[data-ripple]'), function(element){
         // find all elements and attach effect
         new RippleEffect(element); // element is instance of javascript element node
     });
+
+    // Or jQuery way
+    /*
+
+    $('[data-ripple]').each(function(){
+        new RippleEffect(this);
+    });
+
+    */
 </script>
 </body>
 </html>
