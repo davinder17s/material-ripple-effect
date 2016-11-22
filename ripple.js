@@ -23,8 +23,10 @@ RippleEffect.prototype = {
         rippleContainer.className = 'ripple-container';
         rippleContainer.style.overflow = 'hidden';
         this.element.appendChild(rippleContainer);
-
-        var circleD = offsetInfo.width * 2;
+        
+         // fixed the bug
+        var maxLength = offsetInfo.width > offsetInfo.height ? offsetInfo.width : offsetInfo.height;
+        var circleD = maxLength * 2;
 
         var ripple = document.createElement('div');
         ripple.style.position = 'absolute';
