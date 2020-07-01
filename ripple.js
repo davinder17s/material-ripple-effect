@@ -14,11 +14,9 @@ RippleEffect.prototype = {
             ripplerContainer.remove();
         }
         var rippleContainer = document.createElement('div');
-        rippleContainer.style.position = 'fixed';
+        rippleContainer.style.position = 'absolute';
         rippleContainer.style.zIndex = 99;
         rippleContainer.style.width = offsetInfo.width + 'px';
-        rippleContainer.style.left = offsetInfo.left + 'px';
-        rippleContainer.style.top = offsetInfo.top + 'px';
         rippleContainer.style.height = offsetInfo.height + 'px';
         rippleContainer.className = 'ripple-container';
         rippleContainer.style.overflow = 'hidden';
