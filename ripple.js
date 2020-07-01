@@ -18,6 +18,7 @@ RippleEffect.prototype = {
         rippleContainer.style.zIndex = 99;
         rippleContainer.style.width = offsetInfo.width + 'px';
         rippleContainer.style.height = offsetInfo.height + 'px';
+        rippleContainer.style.borderRadius = 'inherit';
         rippleContainer.className = 'ripple-container';
         rippleContainer.style.overflow = 'hidden';
         this.element.appendChild(rippleContainer);
