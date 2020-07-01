@@ -27,15 +27,17 @@ new RippleEffect(element);
     <!-- add animation -->
     <style>
         [data-ripple] .ripple-container {
-            position: absolute !important;
-            border-radius: inherit;
+            // Not Required
         }
-        [data-ripple] .ripple-container .ripple {
+        [data-ripple] .ripple {
             background-color: rgba(255,255,255,0.4);
-            animation: ripple 2s forwards cubic-bezier(0, 0, 0.2, 1);
         }
-        [data-ripple="dark"] .ripple-container .ripple {
+        [data-ripple="dark"] .ripple {
             background-color: rgba(0,0,0,0.1);
+        }
+        [data-ripple="currentColor"] .ripple {
+            background-color: currentColor;
+            opacity: 0.4;
         }
         
         @keyframes ripple {
