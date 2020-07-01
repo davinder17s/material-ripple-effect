@@ -26,8 +26,8 @@ new RippleEffect(element);
     <script src="ripple.js"></script>
     <!-- add animation -->
     <style>
-        [data-ripple] .ripple-container {
-            // Not Required
+        [data-ripple] {
+            position: relative;
         }
         [data-ripple] .ripple {
             background-color: rgba(255,255,255,0.4);
