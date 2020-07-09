@@ -9,7 +9,6 @@ class RippleScope {
   }
 
   run (event) {
-    event.stopPropagation()
     this.clear()
     let target = event.target
     if (!target || !target.dataset.ripple === undefined) {
@@ -21,6 +20,7 @@ class RippleScope {
     if (!target || !target.dataset.ripple === undefined) {
       return
     }
+    event.stopPropagation()
     const style = window.getComputedStyle(target)
     const position = style.getPropertyValue('position')
     if (!['relative', 'absolute', 'fixed'].includes(position)) {
