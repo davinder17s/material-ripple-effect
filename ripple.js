@@ -45,3 +45,15 @@ RippleEffect.prototype = {
         }.bind(this), false);
     }
 };
+
+RippleEffect.create = function (options) {
+    let elements = []
+    if (options instanceof HTMLElement) {
+      elements.push(options)
+    } else if (options instanceof NodeList) {
+      elements = options
+    } else if (typeof options === 'string') {
+      elements = document.querySelectorAll(options)
+    }
+    return [].map.call(elements, element => new RippleEffect(element));
+};
