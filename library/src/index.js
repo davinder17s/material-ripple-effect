@@ -9,6 +9,7 @@ class RippleScope {
   }
 
   run (event) {
+    event.stopPropagation()
     this.clear()
     let target = event.target
     if (!target || !target.dataset.ripple === undefined) {
