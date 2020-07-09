@@ -10,7 +10,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@jjjrmy/material-ripple-effect": "git:https://github.com/jjjrmy/material-ripple-effect/tree/v2/library",
+    "@jjjrmy/material-ripple-effect": "link:../library",
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
     "quasar": "^1.0.0",
