@@ -1,6 +1,6 @@
 {
-  "name": "@jjjrmy/material-ripple-effect",
-  "version": "1.0.0",
+  "name": "@toby.mosque/material-ripple-effect",
+  "version": "1.0.0-beta4",
   "description": "Material Ripple Effect",
   "main": "dist/ripple.js",
   "scripts": {
@@ -24,5 +24,6 @@
   "homepage": "https://github.com/jjjrmy/material-ripple-effect#readme",
   "devDependencies": {
     "webpack-node-externals": "^2.3.0"
-  }
+  },
+  "dependencies": {}
 }

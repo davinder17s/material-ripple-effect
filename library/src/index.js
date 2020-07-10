@@ -11,13 +11,13 @@ class RippleScope {
   run (event) {
     this.clear()
     let target = event.target
-    if (!target || !target.dataset.ripple === undefined) {
+    if (!target || target.dataset.ripple === undefined) {
       target = event.currentTarget
     }
-    if (!target || !target.dataset.ripple === undefined) {
+    if (!target || target.dataset.ripple === undefined) {
       target = this.scope
     }
-    if (!target || !target.dataset.ripple === undefined) {
+    if (!target || target.dataset.ripple === undefined) {
       return
     }
     event.stopPropagation()
@@ -29,6 +29,8 @@ class RippleScope {
 
     var offset = target.getBoundingClientRect()
     var maxLength = offset.width > offset.height ? offset.width : offset.height
+    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+    var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
     var circleD = maxLength * 2
     
     this.container = document.createElement('div')
@@ -49,8 +51,8 @@ class RippleScope {
     this.ripple.style.width = circleD + 'px'
     this.ripple.style.height = circleD + 'px'
     this.ripple.style.borderRadius = '9999px'
-    this.ripple.style.left = ((event.pageX - offset.left) - circleD/2) + 'px'
-    this.ripple.style.top = ((event.pageY - offset.top) - circleD/2) + 'px'
+    this.ripple.style.left = ((event.pageX - scrollLeft - offset.left) - circleD/2) + 'px'
+    this.ripple.style.top = ((event.pageY - scrollTop - offset.top) - circleD/2) + 'px'
     this.ripple.style.animation = 'ripple 2s forwards cubic-bezier(0, 0, 0.2, 1)'
     this.ripple.classList.add('ripple')
     this.ripple.addEventListener('animationend', this.evtClear, { capture: false, once: true })
@@ -83,7 +85,7 @@ class RippleEffect {
         scopes = Array.from(options)
         break
       case typeof options === 'string':
-        const nodes = document.querySelector(options)
+        const nodes = document.querySelectorAll(options)
         scopes = Array.from(nodes)
         break
       default:

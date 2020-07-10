@@ -109,13 +109,13 @@ class RippleScope {
   run (event) {
     this.clear()
     let target = event.target
-    if (!target || !target.dataset.ripple === undefined) {
+    if (!target || target.dataset.ripple === undefined) {
       target = event.currentTarget
     }
-    if (!target || !target.dataset.ripple === undefined) {
+    if (!target || target.dataset.ripple === undefined) {
       target = this.scope
     }
-    if (!target || !target.dataset.ripple === undefined) {
+    if (!target || target.dataset.ripple === undefined) {
       return
     }
     event.stopPropagation()
@@ -181,7 +181,7 @@ class RippleEffect {
         scopes = Array.from(options)
         break
       case typeof options === 'string':
-        const nodes = document.querySelector(options)
+        const nodes = document.querySelectorAll(options)
         scopes = Array.from(nodes)
         break
       default:
