@@ -1,15 +1,105 @@
-class RippleScope {
-  constructor (scope) {
-    this.container = null
-    this.ripple = null
-    this.scope = scope;
+class RippleElement {
+  constructor (element, event) {
+    this.element = element
+    this.style = window.getComputedStyle(this.element)
     this.evtStart = this.run.bind(this)
     this.evtClear = this.clear.bind(this)
-    this.scope.addEventListener('click', this.evtStart, false);
+    this.element.addEventListener('click', this.evtStart, false);
+    this.run(event)
   }
 
   run (event) {
-    this.clear()
+    event.stopPropagation()
+
+    const parent = this.element.parentElement
+    const position = this.style.getPropertyValue('position')
+    if (!['relative', 'absolute', 'fixed'].includes(position)) {
+      this.element.style.position = 'relative'
+    }
+    const offset = this.element.getBoundingClientRect()
+    let top, left
+    if (position === 'fixed') {
+      top = offset.top
+      left = offset.left
+    } else {
+      const parentStyle = window.getComputedStyle(parent)
+      const parentPosition = parentStyle.getPropertyValue('position')
+      if (!['relative', 'absolute', 'fixed'].includes(parentPosition)) {
+        parent.style.position = 'relative'
+      }
+      const parentOffset = parent.getBoundingClientRect()
+      top = offset.top - parentOffset.top
+      left = offset.left - parentOffset.left
+    }
+
+    const maxLength = offset.width > offset.height ? offset.width : offset.height
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+    const scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
+    const circleD = maxLength * 2
+    
+    const container = document.createElement('div')
+    container.style.position = 'absolute'
+    container.style.zIndex = 99
+    container.style.borderRadius = this.style.getPropertyValue('border-radius')
+    container.style.pointerEvents = 'none'
+    container.style.left = left + 'px'
+    container.style.right = 0
+    container.style.top = top + 'px'
+    container.style.bottom = 0
+    container.style.width = offset.width + 'px' 
+    container.style.height = offset.height + 'px' 
+    container.classList.add('ripple-container')
+    container.style.overflow = 'hidden'
+
+    const ripple = document.createElement('div')
+    ripple.style.position = 'absolute'
+    ripple.style.width = circleD + 'px'
+    ripple.style.height = circleD + 'px'
+    ripple.style.borderRadius = '9999px'
+    ripple.style.left = ((event.pageX - scrollLeft - offset.left) - circleD/2) + 'px'
+    ripple.style.top = ((event.pageY - scrollTop - offset.top) - circleD/2) + 'px'
+    ripple.style.animation = 'ripple 2s forwards cubic-bezier(0, 0, 0.2, 1)'
+    ripple.classList.add('ripple')
+
+    const handler = {
+      timeout: 0,
+      container: container,
+      ripple: ripple,
+      event () {
+        window.setTimeout(this.timeout)
+        if (this.container)
+          this.ripple.removeEventListener('animationend', this.event, { capture: false, once: true })
+          this.container.remove()
+          this.container = null
+          this.ripple = null
+      } 
+    }
+    
+    const onAnimationEnd = handler.event.bind(handler)
+    container.appendChild(ripple)
+    parent.appendChild(container)
+    ripple.addEventListener('animationend', onAnimationEnd, { capture: false, once: true })
+    handler.timeout = setTimeout(onAnimationEnd, 2000)
+  }
+
+  clear (container) {
+    if (container) {
+      container.removeEventListener('animationend', event, { capture: false, once: true })
+      container.remove();
+    }
+  }
+}
+
+class RippleScope {
+  constructor (scope) {
+    this.scope = scope;
+    this.evtStart = this.run.bind(this)
+    this.scope.addEventListener('click', this.evtStart, false);
+    this.targets = []
+    this.elements = []
+  }
+
+  run (event) {
     let target = event.target
     if (!target || target.dataset.ripple === undefined) {
       target = event.currentTarget
@@ -20,53 +110,10 @@ class RippleScope {
     if (!target || target.dataset.ripple === undefined) {
       return
     }
-    event.stopPropagation()
-    const style = window.getComputedStyle(target)
-    const position = style.getPropertyValue('position')
-    if (!['relative', 'absolute', 'fixed'].includes(position)) {
-      target.style.position = 'relative'
-    }
-
-    var offset = target.getBoundingClientRect()
-    var maxLength = offset.width > offset.height ? offset.width : offset.height
-    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-    var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
-    var circleD = maxLength * 2
-    
-    this.container = document.createElement('div')
-    this.container.style.position = 'absolute'
-    this.container.style.zIndex = 99
-    this.container.style.borderRadius = 'inherit'
-    this.container.style.left = 0
-    this.container.style.right = 0
-    this.container.style.top = 0
-    this.container.style.bottom = 0
-    this.container.style.width = '100%'
-    this.container.style.height = '100%'
-    this.container.classList.add('ripple-container')
-    this.container.style.overflow = 'hidden'
-
-    this.ripple = document.createElement('div')
-    this.ripple.style.position = 'absolute'
-    this.ripple.style.width = circleD + 'px'
-    this.ripple.style.height = circleD + 'px'
-    this.ripple.style.borderRadius = '9999px'
-    this.ripple.style.left = ((event.pageX - scrollLeft - offset.left) - circleD/2) + 'px'
-    this.ripple.style.top = ((event.pageY - scrollTop - offset.top) - circleD/2) + 'px'
-    this.ripple.style.animation = 'ripple 2s forwards cubic-bezier(0, 0, 0.2, 1)'
-    this.ripple.classList.add('ripple')
-    this.ripple.addEventListener('animationend', this.evtClear, { capture: false, once: true })
-
-    this.container.appendChild(this.ripple)
-    target.appendChild(this.container)
-  }
-
-  clear () {
-    if (this.container) {
-      this.ripple.removeEventListener('animationend', this.evtClear, { capture: false, once: true })
-      this.container.remove();
-      this.container = null
-      this.ripple = null
+    if (!this.elements.includes(target)) {
+      const element = new RippleElement(target, event)
+      this.targets.push(target)
+      this.targets.push(element)
     }
   }
 }
@@ -93,6 +140,10 @@ class RippleEffect {
     }
     this.scopes = scopes.map(scope => new RippleScope(scope))
   }
+}
+
+RippleEffect.create = function (options) {
+  return new RippleEffect(options)
 }
 
 export default RippleEffect

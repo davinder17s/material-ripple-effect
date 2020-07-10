@@ -1,13 +1,10 @@
-[data-ripple] {
-  position: relative;
-}
-[data-ripple] .ripple {
+[data-ripple] ~ .ripple-container .ripple {
   background-color: rgba(255,255,255,0.4);
 }
-[data-ripple="dark"] .ripple {
+[data-ripple="dark"] ~ .ripple-container .ripple {
   background-color: rgba(0,0,0,0.1);
 }
-[data-ripple="currentColor"] .ripple {
+[data-ripple="currentColor"] ~ .ripple-container .ripple {
   background-color: currentColor;
   opacity: 0.4;
 }
