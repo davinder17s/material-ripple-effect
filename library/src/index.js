@@ -113,7 +113,7 @@ class RippleScope {
     if (!this.elements.includes(target)) {
       const element = new RippleElement(target, event)
       this.targets.push(target)
-      this.targets.push(element)
+      this.elements.push(element)
     }
   }
 }

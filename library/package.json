@@ -1,6 +1,6 @@
 {
   "name": "@toby.mosque/material-ripple-effect",
-  "version": "1.0.0-beta8",
+  "version": "1.0.0",
   "description": "Material Ripple Effect",
   "main": "dist/ripple.js",
   "scripts": {
