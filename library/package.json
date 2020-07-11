@@ -1,8 +1,8 @@
 {
   "name": "@toby.mosque/material-ripple-effect",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Material Ripple Effect",
-  "main": "dist/ripple.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "webpack"
