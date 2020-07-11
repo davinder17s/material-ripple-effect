@@ -1,0 +1,29 @@
+{
+  "name": "@toby.mosque/material-ripple-effect",
+  "version": "1.0.0-beta8",
+  "description": "Material Ripple Effect",
+  "main": "dist/ripple.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjjrmy/material-ripple-effect.git"
+  },
+  "keywords": [
+    "material",
+    "ripple",
+    "effect"
+  ],
+  "author": "Jeremy Holstein <jjjrmy@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jjjrmy/material-ripple-effect/issues"
+  },
+  "homepage": "https://github.com/jjjrmy/material-ripple-effect#readme",
+  "devDependencies": {
+    "webpack-node-externals": "^2.3.0"
+  },
+  "dependencies": {}
+}
