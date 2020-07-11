@@ -14,7 +14,7 @@ const webConfig = {
 
 const nodeConfig = {
   target: "node",
-  mode: 'development',
+  mode: 'production',
   devtool: '#source-map',
   entry: {
     ripple: ["./src/index.js"]
