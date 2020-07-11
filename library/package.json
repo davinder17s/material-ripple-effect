@@ -1,10 +1,11 @@
 {
   "name": "@toby.mosque/material-ripple-effect",
-  "version": "1.0.0-beta8",
+  "version": "1.0.1",
   "description": "Material Ripple Effect",
   "main": "dist/ripple.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "demo": "cd ../demo && quasar dev",
     "prepublish": "webpack"
   },
   "repository": {

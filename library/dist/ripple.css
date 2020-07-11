@@ -1,10 +1,12 @@
-[data-ripple] ~ .ripple-container .ripple {
+[data-ripple] .ripple {
   background-color: rgba(255,255,255,0.4);
 }
-[data-ripple="dark"] ~ .ripple-container .ripple {
+
+[data-ripple="dark"] .ripple {
   background-color: rgba(0,0,0,0.1);
 }
-[data-ripple="currentColor"] ~ .ripple-container .ripple {
+
+[data-ripple="currentColor"] .ripple {
   background-color: currentColor;
   opacity: 0.4;
 }
