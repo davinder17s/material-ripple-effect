@@ -14,17 +14,19 @@ RippleEffect.prototype = {
             ripplerContainer.remove();
         }
         var rippleContainer = document.createElement('div');
-        rippleContainer.style.position = 'fixed';
+        rippleContainer.style.position = 'absolute';
         rippleContainer.style.zIndex = 99;
-        rippleContainer.style.width = offsetInfo.width + 'px';
-        rippleContainer.style.left = offsetInfo.left + 'px';
-        rippleContainer.style.top = offsetInfo.top + 'px';
-        rippleContainer.style.height = offsetInfo.height + 'px';
+        rippleContainer.style.borderRadius = 'inherit';
+        rippleContainer.style.left = 0;
+        rippleContainer.style.right = 0;
+        rippleContainer.style.top = 0;
+        rippleContainer.style.bottom = 0;
+        rippleContainer.style.width = '100%';
+        rippleContainer.style.height = '100%';
         rippleContainer.className = 'ripple-container';
         rippleContainer.style.overflow = 'hidden';
         this.element.appendChild(rippleContainer);
-        
-         // fixed the bug
+
         var maxLength = offsetInfo.width > offsetInfo.height ? offsetInfo.width : offsetInfo.height;
         var circleD = maxLength * 2;
 
@@ -32,13 +34,26 @@ RippleEffect.prototype = {
         ripple.style.position = 'absolute';
         ripple.style.width = circleD + 'px';
         ripple.style.height = circleD + 'px';
-        ripple.style.borderRadius = '500px';
+        ripple.style.borderRadius = '9999px';
         ripple.style.left = ((event.pageX - offsetInfo.left) - circleD/2) + 'px';
         ripple.style.top = ((event.pageY - offsetInfo.top) - circleD/2) + 'px';
+        ripple.style.animation = 'ripple 2s forwards cubic-bezier(0, 0, 0.2, 1)';
         ripple.className = 'ripple';
         rippleContainer.appendChild(ripple);
         ripple.addEventListener('animationend', function(){
             rippleContainer.remove();
         }.bind(this), false);
     }
+};
+
+RippleEffect.create = function (options) {
+    let elements = []
+    if (options instanceof HTMLElement) {
+      elements.push(options)
+    } else if (options instanceof NodeList) {
+      elements = options
+    } else if (typeof options === 'string') {
+      elements = document.querySelectorAll(options)
+    }
+    return [].map.call(elements, element => new RippleEffect(element));
 };

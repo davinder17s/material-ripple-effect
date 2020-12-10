@@ -26,12 +26,20 @@ new RippleEffect(element);
     <script src="ripple.js"></script>
     <!-- add animation -->
     <style>
-        .ripple-container {
+        [data-ripple] {
+            position: relative;
         }
-        .ripple-container .ripple{
+        [data-ripple] .ripple {
             background-color: rgba(255,255,255,0.4);
-            animation: ripple 2s forwards cubic-bezier(0, 0, 0.2, 1);
         }
+        [data-ripple="dark"] .ripple {
+            background-color: rgba(0,0,0,0.1);
+        }
+        [data-ripple="currentColor"] .ripple {
+            background-color: currentColor;
+            opacity: 0.4;
+        }
+        
         @keyframes ripple {
             0% {
                 transform: scale(0);
